@@ -34,6 +34,7 @@ const numTwo = 3.14;
 const numThree = numOne + numTwo;
 console.log(`Num3: ${numThree}`); // 13.14
 
+
 const stringOne = "Hello";
 const stringTwo = " world";
 let stringThree = stringOne + stringTwo;
