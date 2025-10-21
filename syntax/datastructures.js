@@ -7,7 +7,7 @@
     2. Reference-based containers (Array, Object, Map, Set, WeakMap, WeakSet)
 
     -------------------------------------------------------
-    1. ARRAYS  →  Ordered list-like collections (index-based)
+    1. ARRAYS  →  Ordered list-like collections (index-based). Size can be changed dynamically
     -------------------------------------------------------
 
     Declaration:
@@ -153,3 +153,63 @@
     - String → text data (immutable)
     - Date / RegExp / TypedArray → specialized use cases
 */
+
+// ------------------Practice: Arrays--------------------
+console.log("---------------ARRAYS---------------");
+const arr = [1, 2, 3];
+console.log(`Array with initialized values: ${arr}`);
+const arr2 = new Array(3); // [empty × 3]
+console.log(`Array initialized with 3 empty values: ${arr2}`);
+// Pushing
+arr.push(4);
+console.log(`Mutated arr, added another element at end using .push(4): ${arr}`);
+arr.push("String type");
+console.log(`Arrays are not type-restricted. Pushing an element "String type": ${arr}`);
+arr2.push(21);
+console.log(`Pushing elements into an empty array, arr2.push(21): ${arr2}`);
+// Popping
+console.log(`Let's pop an element from the array: ${arr}`);
+const popped = arr.pop();
+console.log(`pop() removes the last element of the array and returns it. pop(): ${arr}, popped: ${popped}`);
+// Shifting
+console.log(`Shifting removes the first element of the array. Lets shift: ${arr}`);
+const shifted = arr.shift();
+console.log(`shift() removes the first element of the array and returns it. shift(): ${arr}, shifted: ${shifted}`);
+// Unshifting
+console.log(`Unshift adds an element to the beginning of the array. Lets shift 1 back into ${arr}`);
+arr.unshift(1);
+console.log(`unshift() added element 1 to the beginning of the array: ${arr}`);
+// Splicing
+console.log(`splice(start, deleteCount, ...items) splices an array and returns removed items. First you add a start index, amount of elements to delete after the index, and which ...items to insert after deletion`);
+console.log(`arr.splice(1, 2, 21) - will remove two elements at the first index and one after, and insert 21 instead: ${arr}`);
+const removedSplicing = arr.splice(1, 2, 21);
+console.log(`Splice result: ${arr}, removed: ${removedSplicing}`);
+arr.push(30);
+console.log(`You can remove an exact element from an array if you know the index. Lets remove the third element(2) from arr: ${arr}`);
+const removedSplicingTwo = arr.splice(2, 1);
+arr.push(500);
+console.log(`Element at index 2 removed from array: ${arr}, removed value ${removedSplicingTwo}`);
+console.log(`slice() slices an array and creates a shallow copy. Lets slice the array ${arr} at index 0 and index 2(non-inclusive)`);
+const slicedArr = arr.slice(0, 2);
+console.log(`Sliced array: ${slicedArr}`);
+console.log(`If you change the value at the element at the second(1) index from 21 to 2, it will not change the original arr since its primitive values: ${arr}`);
+slicedArr[1] = 2;
+console.log(`Sliced array after change: ${slicedArr}, original arr after change: ${arr}`);
+const sliceTestArr = [ { name: "Lion" }, { name: "Tiger" }, { name: "Panther" }, { name: "Cheetah" } ];
+console.log(`But if we use non-primitive types such as an object in the array, the value of an original array can be changed by modifying a sliced copy. Lets test it on array of objects: ${sliceTestArr.map((obj) => obj.name)}`);
+const slicedArr2 = sliceTestArr.slice(2, 4);
+console.log(`We created a new slice(2, 4) even though 4th index does not exist since its non-inclusive at end to take the last two objects: ${slicedArr2.map((obj) => obj.name)}. Original arr: ${sliceTestArr.map((obj) => obj.name)}`);
+slicedArr2[1].name = "Jaguar";
+console.log(`Now we changed slicedArr2's last index from Cheetah to Jaguar: ${slicedArr2.map((obj) => obj.name)} and it changed the original arr's last element as well: ${sliceTestArr.map((obj) => obj.name)}`);
+// Concat
+const arr3 = [1, 2, 3];
+const arr4 = [21, 22, 23];
+const concatenatedArr = arr3.concat(arr4);
+console.log(`concat() concatenates two arrays and returns a new one. Non mutating. Lets concatenate arr3: ${arr3} and arr4: ${arr4} -> ${concatenatedArr}. Original arrs not changed: ${arr3} & ${arr4}`);
+// Includes
+console.log(`.includes(x) returns true if an element is found within an array. Lets find out if 1 is in ${arr}: ${arr.includes(1)}`);
+// Indexof
+console.log(`.indexof(x) returns an index of a first occurence of value. If there are multiple, it will only return the first. Lets find an index of 500 in ${arr}: ${arr.indexOf(500)}`);
+// join
+const joinArr = ["This", "is", "an", "array", "of", "strings"];
+console.log(`.join(sep) joins every element of an array into a string, using a separator character. Lets join(" ") with a space as a separator ${joinArr}: ${joinArr.join(" ")}`);
