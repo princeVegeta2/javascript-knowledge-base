@@ -213,3 +213,190 @@ console.log(`.indexof(x) returns an index of a first occurence of value. If ther
 // join
 const joinArr = ["This", "is", "an", "array", "of", "strings"];
 console.log(`.join(sep) joins every element of an array into a string, using a separator character. Lets join(" ") with a space as a separator ${joinArr}: ${joinArr.join(" ")}`);
+// HIGHER ORDER ITERATION METHODS
+// Foreach
+console.log(`arr.forEach(fn) iterates through the array and performs an action. It does not return anything`);
+console.log(`Lets display each item of arr using arr.forEach((a) => console.log(a))`);
+arr.forEach((a) => console.log(`This is an element obtained through foreach: ${a}`));
+// Map
+console.log(`.map() transforms each element and returns a new array. Lets create a new array mappedArr and divide each element of ${arr} by two`);
+const mappedArr = arr.map((a) => a / 2);
+console.log(`arr.map((a) => a / 2) resulted in: ${mappedArr}`);
+// Filter
+console.log(`.filter() goes through each element of the array and adds them to the new array if they are true. Lets find all even numbers on ${arr}`);
+const filteredArr = arr.filter((a) => a % 2 === 0);
+console.log(`Filter result : ${filteredArr}`);
+// Find
+console.log(`find() returns the first element matching a condition. Lets find the first even number in ${arr}`);
+console.log(`Found number: ${arr.find(v => v % 2 === 0)}`);
+// Index
+console.log(`findIndex() returns a first found index of a value. Lets find the index of the first even number in ${arr}`);
+console.log(`First even number index: ${arr.findIndex(v => v % 2 === 0)}`);
+// Some and Every
+console.log(`some() returns true if at least one element satisfies the condition. every() returns true if all elements do. Lets find out if we have at least one odd or all even: `);
+console.log(`All numbers in ${arr} are even: ${arr.every(v => v % 2 === 0)}. At least one number is odd: ${arr.some(v => v % 2 !== 0)}`);
+// Reduce
+console.log(`reduce() takes an array and reduces it to a single value — by applying a callback function repeatedly to each element, carrying forward an “accumulator”.`);
+console.log(`Lets find a sum of all elements of ${arr}`);
+console.log(`The sum of all elements is: ${arr.reduce((acc, val) => acc + val, 0)}`);
+console.log(`Here arr.reduce((acc, val) => acc + val, 0 -> accumulator(initial value 0, and value. And we add each value to the accumulator then defined the initial value of acc())`);
+// Flatten
+console.log(`flat(depth) flattens the mutlidimensional array according to depth specified`);
+const nestedArr = [1, [2, 3], [4, [5, 6]]];
+console.log(`Lets flatten the array ${nestedArr} one level down: ${nestedArr.flat(1)}`);
+// Sort
+const unsorted = [2, 1, 55, 20, 100];
+console.log(`Sort simply sorts an array. It mutates an existing array AND returns a reference to it so that you can save it as a new array`);
+console.log(`Lets sort ${unsorted}: ${unsorted.sort((a, b) => a - b)}`);
+console.log(`You can sort the array without mutation by creating a slice of it first: nums.slice().sort(). sort() when empty sorts alphabetically`);
+// Reverse
+const sorted = unsorted.sort((a, b) => a - b);
+console.log(`reverse() reverses the order of elements, mutates the original array`);
+console.log(`Lets reverse our sorted ${sorted} array: ${sorted.reverse()}`);
+console.log(`Spread operator creates a shallow copy of the new array which shares no reference with the old one.`);
+const spreadArr1 = [1, 2];
+const spreadArr2 = [3, 4];
+const mixed = [0, ...spreadArr1, "middle", ...spreadArr2, 5];
+console.log(`Lets mix ${spreadArr1} and ${spreadArr2}: const mixed = [0, ...spreadArr1, "middle", ...spreadArr2, 5]; Result ${mixed}`);
+// ------------------Practice: Objects--------------------
+console.log("---------------OBJECTS---------------");
+
+// Declarations
+const obj = { name: "Leo", age: 5 };
+console.log(`Object with initialized values:`, obj);
+
+const obj2 = new Object();
+console.log(`Empty object via constructor:`, obj2);
+
+// Adding / Updating properties
+console.log(`Add a new prop (breed) and update age`);
+obj.breed = "Lion";
+obj.age = 6;
+console.log(`After add/update:`, obj);
+
+// Bracket vs dot & computed property names
+const key = "continent";
+obj[key] = "Africa";
+console.log(`Bracket add with computed key "${key}":`, obj);
+
+// Accessing
+console.log(`Access via dot: name=${obj.name}, via bracket: age=${obj["age"]}`);
+
+// Existence checks
+console.log(`"age" in obj?`, "age" in obj);
+console.log(`hasOwn (ES2022):`, Object.hasOwn(obj, "breed"));
+console.log(`legacy hasOwnProperty:`, obj.hasOwnProperty("breed"));
+
+// Deleting
+console.log(`delete obj.breed`);
+delete obj.breed;
+console.log(`After delete:`, obj);
+
+// Optional chaining & nullish coalescing
+const user = { profile: { handle: "big-cat" } };
+console.log(`Optional chaining: user.profile?.handle =`, user.profile?.handle);
+console.log(`Optional chaining miss: user.settings?.theme =`, user.settings?.theme);
+console.log(`Nullish coalescing default: user.settings?.theme ?? "light" =`, user.settings?.theme ?? "light");
+
+// Object utilities
+console.log(`Object.keys:`, Object.keys(obj));
+console.log(`Object.values:`, Object.values(obj));
+console.log(`Object.entries:`, Object.entries(obj));
+
+const entries = [["species", "Panthera leo"], ["weightKg", 190]];
+console.log(`Object.fromEntries (reverse of entries):`, Object.fromEntries(entries));
+
+// Shallow copy / merge (Object.assign & spread)
+const base = { a: 1, nested: { x: 10 } };
+const extra = { b: 2 };
+const merged1 = Object.assign({}, base, extra); // shallow
+const merged2 = { ...base, ...extra };          // shallow
+console.log(`Shallow copies via assign/spread:`, merged1, merged2);
+
+// Demonstrate shallow copy pitfall
+merged1.nested.x = 99; // mutates base.nested too (same reference)
+console.log(`Shallow pitfall (nested shared): base=`, base, `merged1=`, merged1);
+
+// Deep copy (safe for JSON-able data) — NOTE: loses Dates, functions, Maps/Sets
+const deepCopy = JSON.parse(JSON.stringify(base));
+deepCopy.nested.x = 123;
+console.log(`Deep copy via JSON trick: base=`, base, `deepCopy=`, deepCopy);
+
+// Better deep clone for structured data (Node 17+/modern browsers)
+const structClone = structuredClone({ d: new Date(), arr: [1,2], nested: { y: 7 } });
+structClone.nested.y = 100;
+console.log(`structuredClone result:`, structClone);
+
+// Immutability helpers
+const freezeMe = { lock: true };
+Object.freeze(freezeMe);
+console.log(`Object.freeze -> locked:`, freezeMe, ` isFrozen=`, Object.isFrozen(freezeMe));
+// freezeMe.lock = false; // would be ignored or throw in strict mode
+
+const sealMe = { a: 1 };
+Object.seal(sealMe);
+sealMe.a = 2; // allowed (modify existing)
+console.log(`Object.seal -> modified existing prop:`, sealMe, ` isSealed=`, Object.isSealed(sealMe));
+
+// defineProperty (control descriptors)
+const d = {};
+Object.defineProperty(d, "id", {
+  value: 42,
+  writable: false,
+  enumerable: true,
+  configurable: false
+});
+console.log(`defineProperty non-writable id:`, d);
+// d.id = 100; // ignored/throws in strict mode
+
+// Iteration patterns
+const animal = { name: "Cheetah", speed: 120 };
+console.log(`for...in (own + enumerable + inherited):`);
+for (const k in animal) {
+  if (Object.hasOwn(animal, k)) {
+    console.log(`  ${k}:`, animal[k]);
+  }
+}
+
+console.log(`Object.entries + for...of (recommended):`);
+for (const [k, v] of Object.entries(animal)) {
+  console.log(`  ${k}:`, v);
+}
+
+// Transform an object (entries -> map -> fromEntries)
+const upper = Object.fromEntries(
+  Object.entries(animal).map(([k, v]) => [k.toUpperCase(), v])
+);
+console.log(`Transform keys to upper via entries/fromEntries:`, upper);
+
+// Pattern: index an array of objects by id
+const zoo = [
+  { id: 1, name: "Lion" },
+  { id: 2, name: "Tiger" },
+  { id: 3, name: "Leopard" },
+];
+const byId = zoo.reduce((acc, cur) => (acc[cur.id] = cur, acc), {});
+console.log(`Index by id via reduce:`, byId, `→ byId[2]=`, byId[2]);
+
+// Pattern: immutable update (don’t mutate original)
+const updatedZoo = zoo.map(a => a.id === 2 ? { ...a, name: "Bengal Tiger" } : a);
+console.log(`Immutable update with spread:`, updatedZoo, `original:`, zoo);
+
+// Pattern: safe nested updates
+const state = { user: { prefs: { theme: "light", lang: "en" } } };
+const newState = {
+  ...state,
+  user: {
+    ...state.user,
+    prefs: {
+      ...state.user.prefs,
+      theme: "dark",
+    }
+  }
+};
+console.log(`Immutable nested update:`, newState);
+
+// JSON (serialize/parse)
+const json = JSON.stringify(obj);
+console.log(`JSON.stringify →`, json);
+console.log(`JSON.parse →`, JSON.parse(json));
